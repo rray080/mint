@@ -1,0 +1,35 @@
+Technologies :-
+Java/j2ee,  jsp,  Spring web mvc, Spring jdbc, mysql, tomcat, eclipse.
+Mysql- Db Creation :
+1)	Table  Name : Employee
+Columns :   Empcode (pk), Empname, Designation, Salaray,mobile,email, DeptId (FK), UserId, CreateTime (DateTime)
+2)	 Table  Name : DeptName
+Columns:   DeptId (PK),  DeptName,Userid,CreateTime(DateTime)
+
+3)	Table Name :  UserTbl
+Columns :  UserId(pk),  UserName, UserPwd, Staus  (Yes/No), RoleId
+  Role id  1 For Admin User
+  Role id  -2  For Employee
+  Roled id  3 For Manager
+
+Insert Related Data  Only in UserTbl,  using Sql Query from Command Prompt .
+
+1)	Create Login Page
+2)	On Successful full of Login, depending on User Role, Admin Page / Employee /Manager Pages should be displayed
+Admin page:-
+1)	Display menu
+a)	Create departments
+b)	Create employee
+c)	Display list of employees grid (Data Tables need to be used ). 
+d)	Search the employees by(user name, mobile, email,designation)
+(enter the any one or more fields then press the search button then display the search data)
+Preferred  Spring Rest Calls for the Above
+And Should use Jquery and Ajax for Dynamic Data Display.
+Employee page:-
+1)	Display menu
+a)	Emp profile, with Pic
+Manager Page:-
+1)	Display menu
+a)	Manager  profile
+
+Contact Mr. Achari  - 9550727699  for Clarifications.
