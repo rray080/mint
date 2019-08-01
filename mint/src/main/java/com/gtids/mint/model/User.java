@@ -19,16 +19,16 @@ public class User {
 	private String userPwd;
 	private String email;
 	private String status;
-	
+	private byte roleId;
 	
 	public User() {
 	}
-	public User(long userId, String userName, String userPwd,String email, String status) {
+	public User(long userId, String userName, String userPwd,String email, String status, byte roleId) {
 		this.userId = userId;
 		this.userName = userName;
 		this.userPwd = userPwd;
 		this.status = status;
-		
+		this.roleId = roleId;
 		this.email=email;
 	}
 	public long getUserId() {
@@ -63,6 +63,18 @@ public class User {
 		this.status = status;
 	}
 	
+	/**
+	 * @return the roleId
+	 */
+	public byte getRoleId() {
+		return roleId;
+	}
+	/**
+	 * @param roleId the roleId to set
+	 */
+	public void setRoleId(byte roleId) {
+		this.roleId = roleId;
+	}
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
