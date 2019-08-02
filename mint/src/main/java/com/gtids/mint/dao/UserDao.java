@@ -19,4 +19,10 @@ public interface UserDao {
 
 	public User findUserById(long id);
 
+	/**
+	 * @param user
+	 * @return
+	 */
+	public User checkLogin(User user);
+
 }

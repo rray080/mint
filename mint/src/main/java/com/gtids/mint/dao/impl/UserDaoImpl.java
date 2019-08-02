@@ -26,8 +26,8 @@ import com.gtids.mint.model.User;
  */
 
 @Repository
-public class UserDaoImpl implements UserDao{
-	
+public class UserDaoImpl implements UserDao {
+
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
 
@@ -35,35 +35,38 @@ public class UserDaoImpl implements UserDao{
 	public User save(User user) {
 		final String sql = "INSERT INTO user (user_name, user_pwd, status, role_id) VALUES (?, ?, ?, ?)";
 
-        KeyHolder holder = new GeneratedKeyHolder();
-        jdbcTemplate.update(new PreparedStatementCreator() {
-            @Override
-            public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
-                PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-                ps.setString(1, user.getUserName());
-                ps.setString(2, user.getUserPwd());
-                ps.setString(3, user.getStatus());
-                ps.setInt(4, user.getRoleId());
-                return ps;
-            }
-        }, holder);
+		KeyHolder holder = new GeneratedKeyHolder();
+		jdbcTemplate.update(new PreparedStatementCreator() {
+			@Override
+			public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
+				PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+				ps.setString(1, user.getUserName());
+				ps.setString(2, user.getUserPwd());
+				ps.setString(3, user.getStatus());
+				ps.setInt(4, user.getRoleId());
+				return ps;
+			}
+		}, holder);
 
-        int newUserId = holder.getKey().intValue();
-        user.setUserId(newUserId);
-        return user;
+		int newUserId = holder.getKey().intValue();
+		user.setUserId(newUserId);
+		return user;
 	}
 
 	@Override
 	public List<User> findAll() {
-		return jdbcTemplate.query("select * from user", 
-                new UserRowMapper());
+		return jdbcTemplate.query("select * from user", new UserRowMapper());
 	}
 
 	@Override
 	public User findUserById(long id) {
-		return jdbcTemplate.queryForObject(
-	            "select * from users where user_id=?",
-	            new Object[]{id}, new UserRowMapper());
+		return jdbcTemplate.queryForObject("select * from user where user_id=?", new Object[] { id },
+				new UserRowMapper());
 	}
-	
+
+	@Override
+	public User checkLogin(User user) {
+		return jdbcTemplate.queryForObject("select * from user where user_name=? and user_pwd=?",
+				new Object[] { user.getUserName(), user.getUserPwd() }, new UserRowMapper());
+	}
 }
