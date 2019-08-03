@@ -11,6 +11,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.jdbc.JdbcTemplateAutoConfiguration;
+import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
@@ -60,13 +61,25 @@ public class UserDaoImpl implements UserDao {
 
 	@Override
 	public User findUserById(long id) {
-		return jdbcTemplate.queryForObject("select * from user where user_id=?", new Object[] { id },
-				new UserRowMapper());
+		try {
+			return jdbcTemplate.queryForObject("select * from user where user_id=?", new Object[] { id },
+					new UserRowMapper());
+		} catch (DataAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 	@Override
 	public User checkLogin(User user) {
-		return jdbcTemplate.queryForObject("select * from user where user_name=? and user_pwd=?",
-				new Object[] { user.getUserName(), user.getUserPwd() }, new UserRowMapper());
+		try {
+			return jdbcTemplate.queryForObject("select * from user where user_name=? and user_pwd=?",
+					new Object[] { user.getUserName(), user.getUserPwd() }, new UserRowMapper());
+		} catch (DataAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return user;
 	}
 }

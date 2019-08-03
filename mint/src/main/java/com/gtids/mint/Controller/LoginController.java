@@ -1,5 +1,7 @@
 package com.gtids.mint.Controller;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -26,18 +28,24 @@ public class LoginController {
 
 	@RequestMapping(value = "/")
 	public String viewHomePage(Model model) {
-		model.addAttribute("login", new User());
+		model.addAttribute("user", new User());
 		return "login";
 	}
 
 	@RequestMapping(value = "/login")
-	public String test(@ModelAttribute("user") User user) {
+	public String loginCheck(@ModelAttribute("user") User user, HttpSession session, Model model) {
 		user = userDao.checkLogin(user);
-		if (user.getRoleId() == 1)
-			return "test";
-		else if (user.getRoleId() == 2)
-			return "";
-		else
-			return "";
+		if (user.getUserId() != 0) {
+			session.setAttribute("USERAUTH", user);
+			if (user.getRoleId() == 1)
+				return "admin";
+			else if (user.getRoleId() == 2)
+				return "employee";
+			else
+				return "manager";
+		}else {
+			model.addAttribute("loginError", "UserName or password is invalid");
+			return "login";
+		}
 	}
 }
