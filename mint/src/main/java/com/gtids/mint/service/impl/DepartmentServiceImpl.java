@@ -6,5 +6,5 @@ import com.gtids.mint.service.DepartmentService;
 
 @Service
 public class DepartmentServiceImpl implements DepartmentService{
-
+	
 }
