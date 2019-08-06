@@ -18,4 +18,5 @@ public interface DepartmentDao {
 	public List<Department> findAll();
 	
 	public Department findDepartmentById(long id);
+	
 }

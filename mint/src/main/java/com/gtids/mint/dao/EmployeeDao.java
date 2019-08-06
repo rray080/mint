@@ -18,4 +18,9 @@ public Employee save(final Employee dept);
 	public List<Employee> findAll();
 	
 	public Employee findEmployeeById(long id);
+	
+	public int deleteEmployeeById(long id);
+	public int updateEmployeeById(Employee emp);
+	
+	
 }

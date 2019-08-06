@@ -33,6 +33,9 @@ public class EmployeeDaoImpl implements EmployeeDao {
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
 	
+	@Autowired
+	private EmployeeDaoImpl empDao;
+	
 	@Override
 	public Employee save(Employee emp) {
 		final String sql = "INSERT INTO employee (emp_name, emp_designation, emp_salary, mobile, email, dept_id, user_id, create_time) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
@@ -82,6 +85,19 @@ public class EmployeeDaoImpl implements EmployeeDao {
 		return jdbcTemplate.queryForObject(
 	            "select * from employee where emp_code=?",
 	            new Object[]{id}, new EmployeeRowMapper());
+	}
+
+	@Override
+	public int deleteEmployeeById(long id) {
+		String sql = "delete from employee where id = ?";
+		return jdbcTemplate.update(sql, id);
+	}
+
+	@Override
+	public int updateEmployeeById(Employee emp) {
+		String sql = "update employee set emp_name =?, emp_designation=?, emp_salary=?, mobile=?, email=?, dept_id=?, user_id=?, create_time=? where emp_code=?";
+		Employee employee = empDao.findEmployeeById(emp.getUserId());
+		return jdbcTemplate.update(sql, emp.getEmpName(), emp.getEmpDesignation(), emp.getEmpSalary(), emp.getMobile(), emp.getEmail(), emp.getDeptId(), emp.getUserId(), new java.sql.Date(emp.getCreateTime().getTime()));
 	}
 
 }
