@@ -1,5 +1,6 @@
 package com.gtids.mint.Controller;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,5 +48,11 @@ public class LoginController {
 			model.addAttribute("loginError", "UserName or password is invalid");
 			return "login";
 		}
+	}
+	
+	@RequestMapping(value="/logout")
+	public String logout(Model model, HttpServletRequest req) {
+		req.getSession().invalidate();
+		return "redirect:/";
 	}
 }

@@ -48,8 +48,8 @@ public class DepartmentDaoImpl implements DepartmentDao {
             }
         }, holder);
 
-        int newDeptId = holder.getKey().intValue();
-        dept.setUserId(newDeptId);
+        dept.setDeptId(holder.getKey().longValue());
+        System.out.println("...................DAOImp...."+holder.getKey().intValue()+".........................");
         return dept;
 	}
 
