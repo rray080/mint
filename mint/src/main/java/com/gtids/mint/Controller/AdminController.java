@@ -4,6 +4,7 @@
 package com.gtids.mint.Controller;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -12,7 +13,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.gtids.mint.dao.DepartmentDao;
 import com.gtids.mint.dao.EmployeeDao;
@@ -155,6 +159,30 @@ public class AdminController {
 			return type;
 		}
 
+	}
+	
+	@RequestMapping("/edit/{empCode}")
+	public ModelAndView editEmp(@PathVariable(name="empCode") Long empCode) {
+		Employee emp = empDao.findEmployeeById(empCode);
+		ModelAndView mav = new ModelAndView("editEmployee");
+		mav.addObject("depts", deptDao.findAll());
+		mav.addObject("emp", emp);
+		return  mav;
+		
+	}
+	
+	@RequestMapping(value="/editEmpSave", method= RequestMethod.POST)
+	public String EditSaveEmp(@ModelAttribute("emp") Employee emp) {
+		empDao.updateEmployeeById(emp);
+		return "admin";
+
+	}
+	
+	@RequestMapping("/delete/{empCode}")
+	public String deleteEmp(@PathVariable(name="empCode") Long empCode) {
+		empDao.deleteEmployeeById(empCode);
+		return "admin";
+		
 	}
 
 }

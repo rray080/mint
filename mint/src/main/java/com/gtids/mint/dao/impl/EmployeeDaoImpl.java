@@ -81,24 +81,26 @@ public class EmployeeDaoImpl implements EmployeeDao {
 
 	@Override
 	public Employee findEmployeeById(long id) {
-		return jdbcTemplate.queryForObject(
-	            "select * from employee where emp_code=?",
-	            new Object[]{id}, new EmployeeRowMapper());
+//		return jdbcTemplate.queryForObject(
+//	            "select * from employee where emp_code=?",
+//	            new Object[]{id}, new EmployeeRowMapper());
+		String sql = "select * from employee where emp_code = ?";
+		Employee emp = jdbcTemplate.queryForObject(sql, new EmployeeRowMapper(), id);
+		return emp;
 	}
 
 	@Override
 	public int deleteEmployeeById(long id) {
-		String sql = "delete from employee where id = ?";
+		String sql = "delete from employee where emp_code = ?";
 		return jdbcTemplate.update(sql, id);
 	}
 
 	@Override
 	public int updateEmployeeById(Employee emp) {
-		EmployeeDaoImpl empDao = new EmployeeDaoImpl();
-		String sql = "update employee set emp_name =?, emp_designation=?, emp_salary=?, mobile=?, email=?, dept_id=?, user_id=?, create_time=? where emp_code=?";
-		Employee employee = empDao.findEmployeeById(emp.getUserId());
-		return jdbcTemplate.update(sql, emp.getEmpName(), emp.getEmpDesignation(), emp.getEmpSalary(), emp.getMobile(), emp.getEmail(), emp.getDeptId(), emp.getUserId(), new java.sql.Date(emp.getCreateTime().getTime()));
+		String sql = "update employee set emp_name =?, emp_designation=?, emp_salary=?, mobile=?, email=?, dept_id=?, user_id=? where emp_code=?";
+		return jdbcTemplate.update(sql, emp.getEmpName(), emp.getEmpDesignation(), emp.getEmpSalary(), emp.getMobile(), emp.getEmail(),emp.getDeptId(), emp.getUserId(), emp.getEmpCode());
 		//return 0;
+		
 	}
 
 }

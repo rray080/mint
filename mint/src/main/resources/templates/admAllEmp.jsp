@@ -53,12 +53,12 @@
                 <td th:text="${emp.userId}">User Id</td>
                 <td th:text="${emp.createTime }">Create Date</td>
                 <td>
-                    
+                    <a th:href="@{'/edit/' + ${emp.empCode}}">Edit</a>
+                    <a th:href="@{'/delete/' + ${emp.empCode}}">Delete</a>
                 </td>
             </tr>
         </tbody>
     </table>
-				"/@{'/delete/' + ${emp.empCode }}"
 		</div>
 	</div>
 </body>
